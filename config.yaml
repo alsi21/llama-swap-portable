@@ -1,0 +1,44 @@
+
+healthCheckTimeout: 500
+
+logLevel: debug
+
+# note: quite entertaining, but they impact further generation
+# sendLoadingState: true
+
+# apiKeys:
+  # - "sk-api-key-goes-here"
+
+models:
+  sw3-6.7B:
+    proxy: "http://host.docker.internal:${PORT}"
+    useModelName: "AI-Sweden-Models/gpt-sw3-6.7b-v2-instruct"
+    cmd: >
+      docker run 
+      --runtime nvidia 
+      --gpus all
+      --name ${MODEL_ID}
+      --rm
+      --init
+      -v ~/.cache/huggingface:/root/.cache/huggingface
+      --env "HF_TOKEN=$HF_TOKEN" 
+      -p ${PORT}:8000
+      vllm/vllm-openai:v0.14.1 
+      --model AI-Sweden-Models/gpt-sw3-6.7b-v2-instruct
+    cmdStop: docker stop ${MODEL_ID}
+  sw3-20B:
+    proxy: "http://host.docker.internal:${PORT}"
+    useModelName: "AI-Sweden-Models/gpt-sw3-20b-instruct"
+    cmd: >
+      docker run 
+      --runtime nvidia 
+      --gpus all
+      --name ${MODEL_ID}
+      --rm
+      --init
+      -v ~/.cache/huggingface:/root/.cache/huggingface
+      --env "HF_TOKEN=$HF_TOKEN" 
+      -p ${PORT}:8000
+      vllm/vllm-openai:v0.14.1 
+      --model AI-Sweden-Models/gpt-sw3-20b-instruct
+    cmdStop: docker stop ${MODEL_ID}
