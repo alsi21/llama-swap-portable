@@ -9,5 +9,8 @@ docker run -it --runtime nvidia --name llama-swap --restart always -d -p 9292:80
     -v /var/run/docker.sock:/var/run/docker.sock \
     ghcr.io/mostlygeek/llama-swap:v192-cuda-b8087 -config ./config.yaml -watch-config
 
-docker exec -it llama-swap apt-get update
-docker exec -it llama-swap apt-get install docker.io -y
+docker exec -it --user root llama-swap apt-get update
+docker exec -it --user root llama-swap apt-get install docker.io -y
+docker exec -it --user root llama-swap sudo usermod -a -G docker $USER
+docker exec -it --user root llama-swap grep docker /etc/group
+docker exec -it --user root llama-swap newgrp docker
