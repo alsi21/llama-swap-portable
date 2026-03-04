@@ -11,6 +11,6 @@ docker run -it --runtime nvidia --name llama-swap --restart always -d -p 9292:80
 
 docker exec -it --user root llama-swap apt-get update
 docker exec -it --user root llama-swap apt-get install docker.io -y
-docker exec -it --user root llama-swap usermod -a -G docker $USER
-docker exec -it --user root llama-swap grep docker /etc/group
+# docker exec -it --user root llama-swap usermod -a -G docker $USER
+# docker exec -it --user root llama-swap grep docker /etc/group
 docker exec -it --user root llama-swap chmod 666 /var/run/docker.sock
