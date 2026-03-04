@@ -15,7 +15,6 @@ models:
     useModelName: "AI-Sweden-Models/gpt-sw3-126m-instruct"
     cmd: >
       docker run 
-      --gpus all
       --name ${MODEL_ID}
       --rm
       --init
@@ -30,7 +29,6 @@ models:
     useModelName: "AI-Sweden-Models/gpt-sw3-6.7b-v2-instruct"
     cmd: >
       docker run 
-      --gpus all
       --name ${MODEL_ID}
       --rm
       --init
@@ -45,7 +43,6 @@ models:
     useModelName: "AI-Sweden-Models/gpt-sw3-20b-instruct"
     cmd: >
       docker run 
-      --gpus all
       --name ${MODEL_ID}
       --rm
       --init
