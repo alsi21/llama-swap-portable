@@ -10,17 +10,31 @@ logLevel: debug
   # - "sk-api-key-goes-here"
 
 models:
+  sw3-0.1B:
+    proxy: "http://host.docker.internal:${PORT}"
+    useModelName: "AI-Sweden-Models/gpt-sw3-126m-instruct"
+    cmd: >
+      docker run 
+      --gpus all
+      --name ${MODEL_ID}
+      --rm
+      --init
+      -v /home/bth/.cache/huggingface:/root/.cache/huggingface
+      --env "HF_TOKEN=$HF_TOKEN" 
+      -p ${PORT}:8000
+      vllm/vllm-openai:v0.14.1 
+      --model AI-Sweden-Models/gpt-sw3-126m-instruct
+    cmdStop: docker stop ${MODEL_ID}
   sw3-6.7B:
     proxy: "http://host.docker.internal:${PORT}"
     useModelName: "AI-Sweden-Models/gpt-sw3-6.7b-v2-instruct"
     cmd: >
       docker run 
-      --runtime nvidia 
       --gpus all
       --name ${MODEL_ID}
       --rm
       --init
-      -v ~/.cache/huggingface:/root/.cache/huggingface
+      -v /home/bth/.cache/huggingface:/root/.cache/huggingface
       --env "HF_TOKEN=$HF_TOKEN" 
       -p ${PORT}:8000
       vllm/vllm-openai:v0.14.1 
@@ -31,12 +45,11 @@ models:
     useModelName: "AI-Sweden-Models/gpt-sw3-20b-instruct"
     cmd: >
       docker run 
-      --runtime nvidia 
       --gpus all
       --name ${MODEL_ID}
       --rm
       --init
-      -v ~/.cache/huggingface:/root/.cache/huggingface
+      -v /home/bth/.cache/huggingface:/root/.cache/huggingface
       --env "HF_TOKEN=$HF_TOKEN" 
       -p ${PORT}:8000
       vllm/vllm-openai:v0.14.1 
